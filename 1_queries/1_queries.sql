@@ -32,12 +32,22 @@
 -- WHERE end_date IS NULL
 -- ORDER BY cohort_id;
 
--- Get all graduates without a linked Github account.
-SELECT name, email, phone
+-- -- Get all graduates without a linked Github account.
+-- SELECT name, email, phone
+-- FROM students
+-- WHERE github IS NULL
+-- AND end_date IS NOT NULL;
+
+-- Select all rollover students.
+SELECT students.name AS student_name, cohorts.name AS cohort_name, cohorts.start_date AS cohort_start_date, students.start_date AS students_start_date
+FROM students LEFT JOIN cohort_id = cohorts.id
+WHERE cohorts.start_date != students.start_date
+ORDER BY cohorts.start_date;
+--
+SELECT students.name, cohorts.name, cohorts.start_date as cohort_start_date, students.start_date as student_start_date
 FROM students
-WHERE github IS NULL
-AND end_date IS NOT NULL;
-
-
+JOIN cohorts ON cohort_id = cohorts.id
+WHERE cohorts.start_date != students.start_date
+ORDER BY cohort_start_date;
 
 
